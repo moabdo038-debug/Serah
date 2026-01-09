@@ -1,0 +1,197 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>منصة اليقين | الإصدار المتقن</title>
+    <link
+        href="https://fonts.googleapis.com/css2?family=Amiri:wght@400;700&family=Reem+Kufi:wght@400;700&family=Cairo:wght@400;600;800&display=swap"
+        rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link rel="stylesheet" href="style.css">
+</head>
+
+<body>
+
+    <div class="bg-overlay"></div>
+
+    <nav>
+        <div class="logo"><i class="fas fa-moon"></i> اليقين</div>
+        <div class="menu-toggle" onclick="toggleMenu()">
+            <i class="fas fa-bars"></i>
+        </div>
+        <div class="nav-links" id="nav-links">
+            <a href="#quran-sec" onclick="toggleMenu()">القرآن</a>
+            <a href="#adhkar-sec" onclick="toggleMenu()">الأذكار</a>
+            <a href="#hadith-sec" onclick="toggleMenu()">الحديث</a>
+            <a href="#seerah-sec" onclick="toggleMenu()">السيرة</a>
+            <a href="#tasbih-sec" onclick="toggleMenu()">السبحة</a>
+        </div>
+    </nav>
+
+    <header class="hero">
+        <div class="hero-content">
+            <h1>أَلَا بِذِكْرِ اللَّهِ تَطْمَئِنُّ الْقُلُوبُ</h1>
+            <div id="hijri-date" class="hijri-date">...</div>
+
+            <div class="countdown-box">
+                <div>متبقي على صلاة <span id="next-prayer-name" style="color:#fff; font-weight:bold;">...</span></div>
+                <div id="timer" class="timer">--:--:--</div>
+                <div id="location-info" style="font-size:0.9rem; margin-top:5px; color:#888;"></div>
+            </div>
+
+            <div class="prayer-strip" id="prayer-strip"></div>
+        </div>
+    </header>
+
+    <section id="tasbih-sec" class="tasbih-wrapper">
+        <div class="container" style="text-align: center;">
+            <div class="section-header" style="justify-content:center;">
+                <h2>المسبحة الإلكترونية</h2>
+            </div>
+
+            <div class="tasbih-ring-container">
+                <div class="beads-circle" id="beads-circle" onclick="incrementTasbih()"></div>
+                <div class="marker"></div>
+                <div class="tasbih-data">
+                    <div class="tasbih-count" id="tasbih-count">0</div>
+                    <div class="tasbih-phrase" id="tasbih-phrase">سبحان الله</div>
+                </div>
+            </div>
+
+            <div>
+                <button class="reset-btn" onclick="changePhrase()">تغيير الذكر</button>
+                <button class="reset-btn" onclick="resetTasbih()">تصفير</button>
+            </div>
+            <p style="color:#555; font-size:0.8rem; margin-top:15px;">العداد يصفر تلقائياً كل 33</p>
+        </div>
+    </section>
+
+    <section id="adhkar-sec" class="section-padding alt-bg">
+        <div class="container">
+            <div class="section-header">
+                <h2>أذكار المسلم (نصوص كاملة)</h2>
+            </div>
+            <div class="grid-preview">
+                <div class="card" onclick="openAdhkar('morning')">
+                    <h4><i class="fas fa-sun" style="color:var(--gold)"></i> أذكار الصباح</h4>
+                    <p>بداية يومك.</p>
+                </div>
+                <div class="card" onclick="openAdhkar('evening')">
+                    <h4><i class="fas fa-moon" style="color:var(--gold)"></i> أذكار المساء</h4>
+                    <p>حفظ ووقاية.</p>
+                </div>
+                <div class="card" onclick="openAdhkar('sleep')">
+                    <h4><i class="fas fa-bed" style="color:var(--gold)"></i> أذكار النوم</h4>
+                    <p>راحة السكينة.</p>
+                </div>
+                <div class="card" onclick="openAdhkar('prayer')">
+                    <h4><i class="fas fa-pray" style="color:var(--gold)"></i> أذكار الصلاة</h4>
+                    <p>ختام الصلاة.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section id="quran-sec" class="section-padding">
+        <div class="container">
+            <div class="section-header">
+                <h2>المصحف الشريف</h2><button class="view-btn" onclick="openLibrary('quran')">تصفح المصحف</button>
+            </div>
+            <div class="grid-preview" id="quran-preview"></div>
+        </div>
+    </section>
+
+    <section id="hadith-sec" class="section-padding alt-bg">
+        <div class="container">
+            <div class="section-header">
+                <h2>صحيح البخاري (بدءاً من الحديث 1)</h2><button class="view-btn"
+                    onclick="openLibrary('hadith')">المكتبة</button>
+            </div>
+            <div class="grid-preview" id="hadith-preview"></div>
+        </div>
+    </section>
+
+    <section id="seerah-sec" class="section-padding">
+        <div class="container">
+            <div class="section-header">
+                <h2>السيرة النبوية (40 محطة)</h2><button class="view-btn" onclick="openLibrary('seerah')">اقرأ السيرة
+                    كاملة</button>
+            </div>
+            <div class="grid-preview" id="seerah-preview"></div>
+        </div>
+    </section>
+
+    <section id="media-sec" class="section-padding alt-bg">
+        <div class="container">
+            <div class="section-header">
+                <h2>مكتبة الفيديو</h2><button class="view-btn" onclick="openLibrary('video')">مشاهدة الكل</button>
+            </div>
+            <div class="grid-preview" id="video-preview"></div>
+        </div>
+    </section>
+
+    <section class="section-padding">
+        <div class="container">
+            <div class="sadaqah-box">
+                <h2><i class="fas fa-hands-holding-circle"></i> صدقة جارية</h2>
+                <p style="color:#888;">يتغير الدعاء تلقائياً كل 30 ثانية</p>
+                <div class="dua-display" id="dua-text">...</div>
+
+                <div style="margin-top: 30px; border-top:1px solid #333; padding-top:20px;">
+                    <input type="text" id="dead-name" placeholder="اسم المتوفى..."
+                        style="padding:10px; background:#111; border:1px solid #444; color:#fff; border-radius:5px; width: 100%; max-width: 300px;">
+                    <button class="reset-btn" onclick="addPrayer()">إضافة للسجل</button>
+                </div>
+                <div class="ticker-wrap" style="margin-top:10px; overflow:hidden;">
+                    <div class="ticker" id="prayers-ticker"
+                        style="white-space:nowrap; animation:ticker 20s linear infinite; color:#666;"></div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <footer>
+        <p>جميع الحقوق محفوظة &copy; 2026 منصة اليقين</p>
+    </footer>
+
+    <div id="library-modal" class="modal-overlay">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h2 id="lib-title">المكتبة</h2><button class="close-btn" onclick="closeAll()">&times;</button>
+            </div>
+            <div class="modal-body">
+                <input type="text" id="lib-search" placeholder="بحث..." onkeyup="searchLib()"
+                    style="width:100%; padding:10px; margin-bottom:20px; background:#222; border:1px solid #444; color:#fff; display:none; border-radius:5px;">
+                <div id="lib-content" class="grid-preview"></div>
+            </div>
+        </div>
+    </div>
+
+    <div id="reader-modal" class="modal-overlay">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h2 id="reader-title">العنوان</h2><button class="close-btn" onclick="closeAll()">&times;</button>
+            </div>
+            <div class="modal-body">
+                <div id="audio-box" class="audio-box" style="display:none;">
+                    <select id="reciter-select" class="reciter-select" onchange="changeReciter()">
+                        <option value="https://server8.mp3quran.net/afs/">مشاري العفاسي</option>
+                        <option value="https://server7.mp3quran.net/basit/">عبدالباسط عبدالصمد</option>
+                        <option value="https://server10.mp3quran.net/minsh/">محمد صديق المنشاوي</option>
+                        <option value="https://server13.mp3quran.net/husr/">محمود خليل الحصري</option>
+                        <option value="https://server11.mp3quran.net/sds/">عبدالرحمن السديس</option>
+                    </select>
+                    <button class="btn-audio" onclick="toggleAudio()"><i id="play-icon" class="fas fa-play"></i> تشغيل /
+                        إيقاف</button>
+                    <audio id="quran-audio"></audio>
+                </div>
+                <div id="reader-text"></div>
+            </div>
+        </div>
+    </div>
+    <script src="script.js"></script>
+</body>
+
+</html>

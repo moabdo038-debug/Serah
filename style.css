@@ -1,0 +1,634 @@
+/* --- نفس الـ UI الأصلي (الأسود والذهبي) --- */
+:root {
+    --bg: #050505;
+    --card-bg: #121212;
+    --gold: #d4af37;
+    --text: #fff;
+    --border: #333;
+}
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    outline: none;
+    -webkit-tap-highlight-color: transparent;
+}
+
+body {
+    background: var(--bg);
+    color: var(--text);
+    font-family: 'Cairo', sans-serif;
+    overflow-x: hidden;
+    user-select: none;
+}
+
+.bg-overlay {
+    position: fixed;
+    inset: 0;
+    background: radial-gradient(circle, #1a1a1a, #000);
+    z-index: -1;
+}
+
+/* --- الهيدر (تم تعديله للموبايل) --- */
+nav {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 15px 5%;
+    background: rgba(0, 0, 0, 0.95);
+    border-bottom: 1px solid var(--border);
+    position: sticky;
+    top: 0;
+    z-index: 1000;
+}
+
+.logo {
+    color: var(--gold);
+    font-size: 1.5rem;
+    font-weight: bold;
+}
+
+/* روابط الناف بار */
+.nav-links {
+    display: flex;
+    gap: 20px;
+}
+
+.nav-links a {
+    color: #fff;
+    margin-left: 20px;
+    text-decoration: none;
+    transition: 0.3s;
+    font-size: 0.95rem;
+}
+
+.nav-links a:hover {
+    color: var(--gold);
+}
+
+/* زرار القائمة (يظهر في الموبايل فقط) */
+.menu-toggle {
+    display: none;
+    font-size: 1.5rem;
+    color: #fff;
+    cursor: pointer;
+}
+
+.hero {
+    padding: 50px 20px 30px;
+    text-align: center;
+    background: url('https://www.transparenttextures.com/patterns/black-scales.png');
+}
+
+.hero h1 {
+    font-family: 'Amiri';
+    font-size: 3rem;
+    color: var(--gold);
+    margin-bottom: 5px;
+}
+
+.hijri-date {
+    font-family: 'Reem Kufi';
+    color: #888;
+    border: 1px solid #333;
+    padding: 5px 15px;
+    border-radius: 20px;
+    display: inline-block;
+    margin-bottom: 20px;
+    font-size: 0.9rem;
+}
+
+.prayer-strip {
+    display: flex;
+    justify-content: center;
+    gap: 10px;
+    flex-wrap: wrap;
+    margin-top: 25px;
+}
+
+.p-item {
+    background: var(--card-bg);
+    padding: 10px 20px;
+    border: 1px solid var(--border);
+    border-radius: 10px;
+    text-align: center;
+    min-width: 100px;
+    transition: 0.3s;
+}
+
+.p-item span {
+    display: block;
+    font-size: 0.85rem;
+    color: #888;
+}
+
+.p-item strong {
+    color: var(--gold);
+    font-size: 1.2rem;
+}
+
+/* تنسيق الصلاة القادمة (هادئ) */
+.p-item.active {
+    border-color: var(--gold);
+    background: #1a1a1a;
+    box-shadow: 0 0 10px rgba(212, 175, 55, 0.15);
+    transform: scale(1.05);
+    z-index: 10;
+}
+
+.p-item.active strong {
+    font-weight: bold;
+}
+
+/* --- السبحة المحاكية --- */
+.tasbih-wrapper {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    padding: 40px 0;
+}
+
+.tasbih-ring-container {
+    position: relative;
+    width: 260px;
+    height: 260px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin-bottom: 20px;
+}
+
+.beads-circle {
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    border-radius: 50%;
+    border: 14px dotted var(--gold);
+    box-shadow: inset 0 0 30px #000, 0 0 20px rgba(212, 175, 55, 0.1);
+    transition: transform 0.2s cubic-bezier(0.2, 0.8, 0.2, 1);
+    cursor: pointer;
+}
+
+.marker {
+    position: absolute;
+    top: -25px;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 20px;
+    height: 40px;
+    background: linear-gradient(to bottom, var(--gold), #553300);
+    border-radius: 10px;
+    z-index: 10;
+    box-shadow: 0 5px 10px rgba(0, 0, 0, 0.8);
+}
+
+.tasbih-data {
+    position: relative;
+    z-index: 5;
+    text-align: center;
+    pointer-events: none;
+}
+
+.tasbih-count {
+    font-size: 4.5rem;
+    font-family: 'Amiri';
+    color: #fff;
+    font-weight: bold;
+    line-height: 1;
+}
+
+.tasbih-phrase {
+    font-size: 1.4rem;
+    color: var(--gold);
+    font-family: 'Reem Kufi';
+    margin-top: 5px;
+}
+
+.reset-btn {
+    background: transparent;
+    border: 1px solid #555;
+    color: #aaa;
+    padding: 8px 25px;
+    border-radius: 20px;
+    cursor: pointer;
+    margin-top: 10px;
+    font-size: 0.9rem;
+    transition: 0.3s;
+}
+
+.reset-btn:hover {
+    border-color: var(--gold);
+    color: var(--gold);
+}
+
+/* --- الأقسام --- */
+.section-padding {
+    padding: 60px 0;
+}
+
+.alt-bg {
+    background: rgba(255, 255, 255, 0.02);
+}
+
+.container {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 0 20px;
+}
+
+.section-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 30px;
+    border-bottom: 1px solid var(--border);
+    padding-bottom: 10px;
+}
+
+.section-header h2 {
+    font-family: 'Reem Kufi';
+    color: var(--gold);
+}
+
+.view-btn {
+    background: transparent;
+    border: 1px solid var(--gold);
+    color: var(--gold);
+    padding: 5px 20px;
+    border-radius: 20px;
+    cursor: pointer;
+    transition: 0.3s;
+}
+
+.view-btn:hover {
+    background: var(--gold);
+    color: #000;
+}
+
+.grid-preview {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+    gap: 20px;
+}
+
+.card {
+    background: var(--card-bg);
+    padding: 25px;
+    border: 1px solid var(--border);
+    border-radius: 12px;
+    cursor: pointer;
+    transition: 0.3s;
+    position: relative;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+}
+
+.card:hover {
+    border-color: var(--gold);
+    transform: translateY(-5px);
+    background: #1a1a1a;
+}
+
+.card h4 {
+    margin-bottom: 10px;
+    color: #fff;
+    font-size: 1.1rem;
+    font-family: 'Amiri';
+}
+
+.card p {
+    color: #aaa;
+    font-size: 0.95rem;
+    line-height: 1.6;
+}
+
+.badge {
+    position: absolute;
+    top: 15px;
+    left: 15px;
+    color: var(--gold);
+    opacity: 0.5;
+    font-weight: bold;
+}
+
+/* --- Video Cards --- */
+.video-card {
+    padding: 0 !important;
+    overflow: hidden;
+    height: 200px;
+    background-size: cover;
+    background-position: center;
+    border: 1px solid #333;
+    position: relative;
+}
+
+.video-overlay {
+    position: absolute;
+    inset: 0;
+    background: rgba(0, 0, 0, 0.6);
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    transition: 0.3s;
+}
+
+.video-card:hover .video-overlay {
+    background: rgba(0, 0, 0, 0.4);
+}
+
+.play-icon {
+    font-size: 3rem;
+    color: var(--gold);
+    opacity: 0.8;
+    transition: 0.3s;
+}
+
+.video-card:hover .play-icon {
+    transform: scale(1.1);
+    opacity: 1;
+}
+
+.video-title {
+    position: absolute;
+    bottom: 0;
+    width: 100%;
+    padding: 10px;
+    background: rgba(0, 0, 0, 0.8);
+    text-align: center;
+    color: #fff;
+    font-size: 0.9rem;
+}
+
+/* --- الصدقة الجارية --- */
+.sadaqah-box {
+    border: 1px solid var(--gold);
+    padding: 30px;
+    border-radius: 15px;
+    text-align: center;
+    background: #080808;
+    position: relative;
+    overflow: hidden;
+}
+
+.dua-display {
+    font-family: 'Amiri';
+    font-size: 1.5rem;
+    color: #fff;
+    margin: 20px 0;
+    padding: 20px;
+    background: #111;
+    border-radius: 10px;
+    border: 1px dashed #444;
+    min-height: 120px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: opacity 0.5s ease-in-out;
+}
+
+/* --- Footer & Modals --- */
+footer {
+    text-align: center;
+    padding: 20px;
+    color: #666;
+    border-top: 1px solid #333;
+    margin-top: 50px;
+}
+
+.modal-overlay {
+    position: fixed;
+    inset: 0;
+    background: rgba(0, 0, 0, 0.95);
+    z-index: 2000;
+    display: none;
+    justify-content: center;
+    align-items: center;
+}
+
+.modal-content {
+    background: #0a0a0a;
+    border: 1px solid var(--gold);
+    border-radius: 15px;
+    width: 90%;
+    max-width: 900px;
+    max-height: 90vh;
+    display: flex;
+    flex-direction: column;
+}
+
+.modal-header {
+    padding: 15px 20px;
+    background: #151515;
+    border-bottom: 1px solid var(--border);
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.modal-header h2 {
+    color: var(--gold);
+    font-family: 'Amiri';
+}
+
+.modal-body {
+    padding: 25px;
+    overflow-y: auto;
+}
+
+.close-btn {
+    background: none;
+    border: none;
+    color: #fff;
+    font-size: 2rem;
+    cursor: pointer;
+}
+
+/* Text Styles */
+.quran-text {
+    font-family: 'Amiri';
+    font-size: 2.2rem;
+    line-height: 2.6;
+    color: #fff;
+    text-align: center;
+}
+
+.basmala {
+    color: var(--gold);
+    font-size: 1.6rem;
+    margin-bottom: 30px;
+    display: block;
+    font-family: 'Amiri';
+}
+
+.details-text {
+    font-size: 1.2rem;
+    line-height: 2.2;
+    color: #e0e0e0;
+    white-space: pre-line;
+    text-align: justify;
+    padding: 10px;
+}
+
+/* Adhkar Styling (Enhanced for Readability) */
+.adhkar-item {
+    background: #151515;
+    border-bottom: 1px solid #333;
+    padding: 20px;
+    margin-bottom: 15px;
+    border-radius: 8px;
+    cursor: pointer;
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-start;
+}
+
+.adhkar-item:hover {
+    background: #1f1f1f;
+}
+
+.adhkar-text {
+    flex: 1;
+    margin-left: 15px;
+    font-size: 1.15rem;
+    line-height: 2;
+    color: #eee;
+    white-space: pre-line;
+}
+
+.adhkar-count {
+    background: var(--gold);
+    color: #000;
+    min-width: 35px;
+    height: 35px;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-weight: bold;
+    font-size: 0.9rem;
+    flex-shrink: 0;
+    margin-top: 5px;
+}
+
+.adhkar-item.done {
+    opacity: 0.5;
+}
+
+.adhkar-item.done .adhkar-count {
+    background: #444;
+    color: #888;
+}
+
+.audio-box {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    margin-bottom: 20px;
+    padding: 15px;
+    background: #151515;
+    border-radius: 10px;
+    border: 1px solid #333;
+}
+
+.reciter-select {
+    padding: 8px;
+    background: #222;
+    border: 1px solid #444;
+    color: #fff;
+    border-radius: 5px;
+    font-family: 'Cairo';
+}
+
+.btn-audio {
+    background: var(--gold);
+    padding: 8px;
+    border-radius: 20px;
+    border: none;
+    cursor: pointer;
+    font-weight: bold;
+}
+
+.countdown-box {
+    text-align: center;
+    margin: 20px 0;
+    color: #ccc;
+}
+
+.timer {
+    font-size: 2.5rem;
+    color: var(--gold);
+    font-family: monospace;
+    font-weight: bold;
+    direction: ltr;
+}
+
+::-webkit-scrollbar {
+    width: 8px;
+}
+
+::-webkit-scrollbar-track {
+    background: #000;
+}
+
+::-webkit-scrollbar-thumb {
+    background: #333;
+    border-radius: 4px;
+}
+
+/* --- Media Queries (تصحيح الريسبونسيف) --- */
+@media (max-width: 768px) {
+
+    /* تعديل الهيدر ليصبح قائمة منسدلة */
+    .menu-toggle {
+        display: block;
+    }
+
+    .nav-links {
+        display: none;
+        /* مخفية افتراضياً */
+        flex-direction: column;
+        position: absolute;
+        top: 100%;
+        left: 0;
+        width: 100%;
+        background: rgba(0, 0, 0, 0.98);
+        border-bottom: 1px solid var(--gold);
+        padding: 20px 0;
+        text-align: center;
+        gap: 15px;
+    }
+
+    .nav-links.active {
+        display: flex;
+    }
+
+    /* تظهر عند الضغط */
+    .nav-links a {
+        margin: 0;
+        font-size: 1.2rem;
+        padding: 10px;
+        display: block;
+        border-bottom: 1px solid #222;
+    }
+
+    .hero h1 {
+        font-size: 2.2rem;
+    }
+
+    /* تحسين عرض الكروت في الموبايل */
+    .grid-preview {
+        grid-template-columns: 1fr;
+    }
+
+    .tasbih-ring-container {
+        width: 240px;
+        height: 240px;
+    }
+
+    .tasbih-count {
+        font-size: 3.5rem;
+    }
+}
